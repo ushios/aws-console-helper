@@ -4,6 +4,11 @@ namespace Ushios\Component\AwsConsoleHelper\Common;
 
 use Aws\Common\Aws;
 
+/**
+ * Abstract AWS client wrapper.
+ * @author ushio
+ *
+ */
 abstract class AbstractClientWrapper implements ClientWrapperInterface
 {
     /**
@@ -13,17 +18,10 @@ abstract class AbstractClientWrapper implements ClientWrapperInterface
     protected $aws;
     
     /**
-     * Ec2 client
-     * @var Aws\Ec2\Ec2Client
-     */
-    protected $ec2;
-    
-    /**
      * {@inheritdoc}
      */
     public function setAwsClient(Aws $aws)
     {
         $this->aws = $aws;
-        $this->ec2 = $aws->get('ec2');
     }
 }

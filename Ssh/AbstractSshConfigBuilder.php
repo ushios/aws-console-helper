@@ -6,14 +6,13 @@ use Aws\Common\Aws;
 
 use Ushios\Component\AwsConsoleHelper\Common\AbstractClientWrapper;
 
+/**
+ * Abstract ssh config builder.
+ * @author ushio
+ *
+ */
 abstract class AbstractSshConfigBuilder extends AbstractClientWrapper implements  SshConfigBuilderInterface
 {
-    /**
-     * Aws client
-     * @var Aws\Common\Aws
-     */
-    protected $aws;
-    
     /**
      * Ec2 client
      * @var Aws\Ec2\Ec2Client
@@ -25,7 +24,18 @@ abstract class AbstractSshConfigBuilder extends AbstractClientWrapper implements
      */
     public function setAwsClient(Aws $aws)
     {
-        $this->aws = $aws;
+        parent::setAwsClient($aws);
         $this->ec2 = $aws->get('ec2');
+    }
+    
+    /**
+     * Describe instances.
+     * @param array $options
+     */
+    protected function doGetInstances(array $options = array())
+    {
+        $result = $this->ec2->describeInstances($options);
+        
+        return $result;
     }
 }
