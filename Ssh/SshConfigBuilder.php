@@ -29,7 +29,9 @@ class SshConfigBuilder extends AbstractSshConfigBuilder
         foreach($reservations as $reservation){
             $config = $this->makeConfig($reservation, $options);
             
-            $configs[] = $config;
+            if ($config){
+                $configs[] = $config;
+            }
         }
         
         return $configs;
@@ -47,8 +49,12 @@ class SshConfigBuilder extends AbstractSshConfigBuilder
         if (count($instances) < 1) return null;
         $instance = $instances[0];
         
-        $options = array_merge($this->defaultOptions, $options);
+        // running only.
+        if (!isset($instance['State']['Name'])) return null;
+        if ($instance['State']['Name'] != 'running') return null;
         
+        // options.
+        $options = array_merge($this->defaultOptions, $options);
         $config = array();
         $config['hostname'] = $this->getInstanceAddress($instance, $options['Private']);
         $config['Host'] = $this->getName($instance);
