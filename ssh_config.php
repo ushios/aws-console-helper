@@ -6,7 +6,9 @@ use Aws\Common\Aws;
 
 $options = getopt("", array(
         "output:",
-        "private"
+        "private",
+        "identity_file::",
+        "user::"
 ));
 
 // make options
@@ -14,6 +16,8 @@ $sp = DIRECTORY_SEPARATOR;
 $private = isset($options['private']);
 if (is_null($options['output'])) throw new \Exception('output option is required.');
 $outputPath = isset($options['output']) ? $options['output'] : "~".$sp.".ssh".$sp."config";
+$user = isset($options['user']) ? $options['user'] : null;
+$identityFile = isset($options['identity_file']) ? $options['identity_file'] : null;
 
 // get aws client.
 $aws = Aws::factory(__DIR__."/Resources/config.json");
@@ -22,7 +26,9 @@ $aws = Aws::factory(__DIR__."/Resources/config.json");
 $builder = new SshConfigBuilder();
 $builder->setAwsClient($aws);
 $config = $builder->getConfigs(array(
-        "Private" => $private
+        "Private" => $private,
+        "User" => $user,
+        "IdentityFile" => $identityFile
 ));
 
 // make config string.

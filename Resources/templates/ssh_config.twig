@@ -1,4 +1,11 @@
 {% for host in config %}
-Host {{ host.Host }}
+Host {{ host.Host }}_{{ host.hostname }}
     hostname {{ host.hostname }}
+{% if host.User %}
+    User {{ host.User }}
+{% endif %}
+{% if host.IdentityFile %}
+    IdentityFile {{ host.IdentityFile }}
+{% endif %}
+
 {% endfor %}

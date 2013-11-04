@@ -53,6 +53,14 @@ class SshConfigBuilder extends AbstractSshConfigBuilder
         $config['hostname'] = $this->getInstanceAddress($instance, $options['Private']);
         $config['Host'] = $this->getName($instance);
         
+        if (isset($options['User']) && $options['User']){
+            $config['User'] = $options['User'];
+        }
+        
+        if (isset($options['IdentityFile']) && $options['IdentityFile']){
+            $config['IdentityFile'] = $options['IdentityFile'];
+        }
+        
         return $config;
     }
     
