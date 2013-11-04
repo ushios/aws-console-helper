@@ -13,6 +13,10 @@ aws-console-helper
     $ git clone https://github.com/ushios/aws-console-helper.git path/to/clone
     $ cd path/to/clone
     $ composer install
+    $
+    $ cd Resources
+    $ cp config.json.dist config.json
+    $ vi config.json # edit aws credential infos.
 
 ## using components
 
