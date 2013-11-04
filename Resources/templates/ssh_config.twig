@@ -1,3 +1,6 @@
+{% if NoStrictHostKeyChecking %}
+StrictHostKeyChecking no
+{% endif %}
 {% for host in config %}
 Host {{ host.Host }}_{{ host.hostname }}
     hostname {{ host.hostname }}

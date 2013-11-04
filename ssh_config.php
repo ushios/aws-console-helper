@@ -7,6 +7,7 @@ use Aws\Common\Aws;
 $options = getopt("", array(
         "output:",
         "private",
+        "no-hostkey-checking",
         "identity_file::",
         "user::"
 ));
@@ -14,10 +15,12 @@ $options = getopt("", array(
 // make options
 $sp = DIRECTORY_SEPARATOR;
 $private = isset($options['private']);
+$noHostkeyChecking = isset($options['no-hostkey-checking']);
 if (is_null($options['output'])) throw new \Exception('output option is required.');
 $outputPath = isset($options['output']) ? $options['output'] : "~".$sp.".ssh".$sp."config";
 $user = isset($options['user']) ? $options['user'] : null;
 $identityFile = isset($options['identity_file']) ? $options['identity_file'] : null;
+
 
 // get aws client.
 $aws = Aws::factory(__DIR__."/Resources/config.json");
@@ -37,7 +40,8 @@ $twig = new Twig_Environment($loader, array(
         'cache' => __DIR__.'/cache',
 ));
 $output = $twig->render('ssh_config.twig', array(
-        "config" => $config
+        "config" => $config,
+        "NoStrictHostKeyChecking" => $noHostkeyChecking
 ));
 
 // output to file.

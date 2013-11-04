@@ -35,7 +35,7 @@ aws-console-helper
 ## create .ssh/config
 
     $ cd path/to/clone
-    $ php ssh_config.php [--private] [--output […]] [--user […]] [--identity_file […]]
+    $ php ssh_config.php [--private] [--no-hostkey-checking] [--output […]] [--user […]] [--identity_file […]]
 
 ---
 
