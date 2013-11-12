@@ -8,7 +8,7 @@ aws-console-helper
 
 # Installation
 
-## using CLI interface
+## using in CLI
 
     $ git clone https://github.com/ushios/aws-console-helper.git path/to/clone
     $ cd path/to/clone
