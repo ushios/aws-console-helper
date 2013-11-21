@@ -10,5 +10,8 @@ Host {{ host.Host }}_{{ host.hostname }}
 {% if host.IdentityFile %}
     IdentityFile {{ host.IdentityFile }}
 {% endif %}
+{% if host.Port %}
+    Port {{ host.Port }}
+{% endif %}
 
 {% endfor %}

@@ -17,11 +17,7 @@ class SshConfigBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $sshConfigBuilder = new SshConfigBuilder();
         
-        $aws = Aws::factory(array(
-            'key'    => 'AKIAIXSJE53LUYQ32XTQ',
-            'secret' => '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',
-            'region' => 'ap-northeast-1'
-        ));
+        $aws = Aws::factory(__DIR__."/../Resources/config.json");
         
         $sshConfigBuilder->setAwsClient($aws);
     }

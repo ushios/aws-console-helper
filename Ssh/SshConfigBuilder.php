@@ -59,12 +59,19 @@ class SshConfigBuilder extends AbstractSshConfigBuilder
         $config['hostname'] = $this->getInstanceAddress($instance, $options['Private']);
         $config['Host'] = $this->getName($instance);
         
+        $configJson = $this->getSshConfigJson($instance);
+        $configJson = json_decode($configJson, true);
+        
         if (isset($options['User']) && $options['User']){
             $config['User'] = $options['User'];
         }
         
         if (isset($options['IdentityFile']) && $options['IdentityFile']){
             $config['IdentityFile'] = $options['IdentityFile'];
+        }
+        
+        if ($configJson){
+            $config = array_merge($config, $configJson);
         }
         
         return $config;
@@ -100,6 +107,26 @@ class SshConfigBuilder extends AbstractSshConfigBuilder
         
         foreach($instance['Tags'] as $tag){
             if ($tag['Key'] == 'Name'){
+                return $tag['Value'];
+            }
+        }
+        
+        return null;
+    }
+    
+    /**
+     * Get ssh config json.
+     * @param array $instance
+     * @return NULL|unknown
+     */
+    protected function getSshConfigJson(array $instance)
+    {
+        if(!isset($instance['Tags'])){
+            return null;
+        }
+        
+        foreach($instance['Tags'] as $tag){
+            if ($tag['Key'] == 'ssh-config-json'){
                 return $tag['Value'];
             }
         }
